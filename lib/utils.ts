@@ -24,11 +24,19 @@ export function getInvoiceStatusLabel(
 export function getInvoiceStatusStyle(status: string) {
   switch (status) {
     case "PAID":
-      return { bg: "bg-emerald-600", text: "text-white", label: "Đã thanh toán" };
+      return {
+        bg: "bg-emerald-600",
+        text: "text-white",
+        label: "Đã thanh toán",
+      };
     case "UNPAID":
       return { bg: "bg-red-600", text: "text-white", label: "Chưa thanh toán" };
     case "PARTIAL":
-      return { bg: "bg-amber-500", text: "text-white", label: "Thanh toán một phần" };
+      return {
+        bg: "bg-amber-500",
+        text: "text-white",
+        label: "Thanh toán một phần",
+      };
     case "DRAFT":
       return { bg: "bg-zinc-500", text: "text-white", label: "Nháp" };
     case "CANCELLED":
