@@ -138,34 +138,56 @@ export function InvoiceDetailModal({
             <p className="text-xs font-medium mb-3">CÁC KHOẢN THU</p>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Tiền phòng</span>
-                <span className="text-sm">{formatMoney(invoice?.rentAmount)}</span>
+                <span className="text-sm text-muted-foreground">
+                  Tiền phòng
+                </span>
+                <span className="text-sm">
+                  {formatMoney(invoice?.rentAmount)}
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Tiền dịch vụ</span>
-                <span className="text-sm">{formatMoney(invoice?.serviceAmount)}</span>
+                <span className="text-sm text-muted-foreground">
+                  Tiền dịch vụ
+                </span>
+                <span className="text-sm">
+                  {formatMoney(invoice?.serviceAmount)}
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Sổ ghi nợ (tab)</span>
-                <span className="text-sm">{formatMoney(invoice?.tabAmount)}</span>
+                <span className="text-sm text-muted-foreground">
+                  Sổ ghi nợ (tab)
+                </span>
+                <span className="text-sm">
+                  {formatMoney(invoice?.tabAmount)}
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Nợ kỳ trước</span>
-                <span className="text-sm">{formatMoney(invoice?.debtAmount)}</span>
+                <span className="text-sm text-muted-foreground">
+                  Nợ kỳ trước
+                </span>
+                <span className="text-sm">
+                  {formatMoney(invoice?.debtAmount)}
+                </span>
               </div>
               <Separator />
               <div className="flex justify-between font-semibold">
                 <span className="text-sm">Tổng cộng</span>
-                <span className="text-sm">{formatMoney(invoice?.totalAmount)}</span>
+                <span className="text-sm">
+                  {formatMoney(invoice?.totalAmount)}
+                </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Đã thanh toán</span>
+                <span className="text-sm text-muted-foreground">
+                  Đã thanh toán
+                </span>
                 <span className="text-emerald-600 text-sm">
                   {formatMoney(invoice?.paidAmount)}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Còn lại phải thu</span>
+                <span className="text-sm text-muted-foreground">
+                  Còn lại phải thu
+                </span>
                 <span className="text-red-400 text-sm">
                   {formatMoney(invoice?.paidAmount - invoice?.paidAmount)}
                 </span>
