@@ -9,7 +9,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getInvoiceStatusLabel, getInvoiceStatusStyle } from "@/lib/utils";
 import dayjs from "dayjs";
@@ -18,6 +17,8 @@ import { useState } from "react";
 import { Input } from "../ui/input";
 import { toast } from "sonner";
 import { InvoiceActionButtons } from "./invoice-action-buttons";
+import { useCancelInvoice } from "@/hooks/useInvoiceMutations";
+import { PaymentModal } from "./payment-modal";
 
 interface InvoiceDetailModalProps {
   open: boolean;
@@ -41,6 +42,8 @@ export function InvoiceDetailModal({
     queryFn: () => axiosClient.get(`/invoice/${invoiceId}`),
     enabled: !!invoiceId && open,
   });
+
+  const cancelMutation = useCancelInvoice(invoiceId);
 
   const mutation = useMutation({
     mutationFn: () => {
@@ -80,7 +83,7 @@ export function InvoiceDetailModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
         <DialogHeader className="border-b pb-3">
           <div className="flex items-center justify-between">
             <div>
@@ -154,11 +157,14 @@ export function InvoiceDetailModal({
                       </p>
                     )}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Tiêu thụ:{" "}
-                    {(invoice?.newElectric || 0) - (invoice?.oldElectric || 0)}{" "}
-                    kWh
-                  </p>
+                  {invoice?.newElectric ? (
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Tiêu thụ:{" "}
+                      {(invoice?.newElectric || 0) -
+                        (invoice?.oldElectric || 0)}{" "}
+                      kWh
+                    </p>
+                  ) : null}
                 </div>
 
                 <div className="bg-gray-200 p-3 rounded-lg">
@@ -184,10 +190,12 @@ export function InvoiceDetailModal({
                       />
                     </p>
                   )}
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Tiêu thụ:{" "}
-                    {(invoice?.newWater || 0) - (invoice?.oldWater || 0)} m³
-                  </p>
+                  {invoice?.newWater ? (
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Tiêu thụ:{" "}
+                      {(invoice?.newWater || 0) - (invoice?.oldWater || 0)} m³
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -251,7 +259,7 @@ export function InvoiceDetailModal({
                   Còn lại phải thu
                 </span>
                 <span className="text-red-400 text-sm">
-                  {formatMoney(invoice?.paidAmount - invoice?.paidAmount)}
+                  {formatMoney(invoice?.totalAmount - invoice?.paidAmount)}
                 </span>
               </div>
             </div>
@@ -266,7 +274,7 @@ export function InvoiceDetailModal({
               onRecordPayment: () => setPaymentModalOpen(true),
               onViewReceipt: () =>
                 window.open(`/invoices/${invoice.id}/receipt`, "_blank"),
-              onCancel: () => onOpenChange(false),
+              onCancel: () => cancelMutation.mutate(),
             }}
             loading={{
               finalize: mutation.isPending,
@@ -283,6 +291,14 @@ export function InvoiceDetailModal({
             Chốt hoá đơn
           </Button> */}
         </div>
+
+        <PaymentModal
+          open={isPaymentModalOpen}
+          onClose={() => setPaymentModalOpen(false)}
+          invoiceId={invoiceId || 0}
+          totalAmount={Number(invoice?.totalAmount || 0)}
+          alreadyPaidAmount={Number(invoice?.paidAmount || 0)}
+        />
       </DialogContent>
     </Dialog>
   );

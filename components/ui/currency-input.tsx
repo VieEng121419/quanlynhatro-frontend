@@ -22,7 +22,6 @@ export const CurrencyInput = forwardRef<HTMLInputElement, CurrencyInputProps>(
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const input = e.target.value.replace(/[^0-9]/g, ""); // Chỉ giữ số
-      console.log("🚀 ~ handleChange ~ input:", input)
       const numericValue = Number(input);
 
       setDisplayValue(input ? numericValue.toLocaleString("vi-VN") : "");
