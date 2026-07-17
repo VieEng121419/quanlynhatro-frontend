@@ -21,7 +21,7 @@ import {
 } from "@/components/contracts/view-contract-modal";
 import { EditContractModal } from "@/components/contracts/edit-contract-modal";
 import { DEFAULT_CONTRACT } from "@/lib/constants/constants";
-import { InvoiceDetailModal } from "@/components/invoice/InvoiceDetailModal";
+import { InvoiceDetailModal } from "@/components/invoice/Invoice-detail-modal";
 import { toast } from "sonner";
 
 export interface Column<T> {

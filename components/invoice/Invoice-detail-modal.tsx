@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosClient } from "@/lib/api/axios-client";
 import {
   Dialog,
@@ -14,6 +14,10 @@ import { Separator } from "@/components/ui/separator";
 import { getInvoiceStatusLabel, getInvoiceStatusStyle } from "@/lib/utils";
 import dayjs from "dayjs";
 import { Droplet, Zap } from "lucide-react";
+import { useState } from "react";
+import { Input } from "../ui/input";
+import { toast } from "sonner";
+import { InvoiceActionButtons } from "./invoice-action-buttons";
 
 interface InvoiceDetailModalProps {
   open: boolean;
@@ -26,10 +30,36 @@ export function InvoiceDetailModal({
   onOpenChange,
   invoiceId,
 }: InvoiceDetailModalProps) {
+  const queryClient = useQueryClient();
+  const [newElectricValue, setNewElectricValue] = useState(0);
+  const [newWatercValue, setNewWaterValue] = useState(0);
+
+  const [isPaymentModalOpen, setPaymentModalOpen] = useState(false);
+
   const { data } = useQuery({
     queryKey: ["invoice", invoiceId],
     queryFn: () => axiosClient.get(`/invoice/${invoiceId}`),
     enabled: !!invoiceId && open,
+  });
+
+  const mutation = useMutation({
+    mutationFn: () => {
+      return axiosClient.patch(`/invoice/${invoiceId}/counter`, {
+        newElectric: newElectricValue,
+        newWater: newWatercValue,
+      });
+    },
+    onSuccess: () => {
+      toast.success(`Cập nhật hoá đơn #${invoiceId} thành công`);
+      queryClient.invalidateQueries({ queryKey: ["rooms"] });
+      queryClient.invalidateQueries({ queryKey: ["invoice", invoiceId] });
+      //   onOpenChange(false);
+      setNewElectricValue(0);
+      setNewWaterValue(0);
+    },
+    onError: (err) => {
+      toast.error(err?.message || "Tạo hợp đồng thất bại");
+    },
   });
 
   const invoice = data?.data;
@@ -104,10 +134,27 @@ export function InvoiceDetailModal({
                     <Zap className="w-[10%] text-muted-foreground" />
                     <span className="text-xs">Điện (kWh)</span>
                   </div>
-                  <p className="text-2xl font-semibold mt-1">
-                    {invoice?.oldElectric} → {invoice?.newElectric}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
+                  <div>
+                    {invoice?.newElectric ? (
+                      <p className="text-2xl font-semibold mt-1">
+                        {invoice?.oldElectric} → {invoice?.newElectric}
+                      </p>
+                    ) : (
+                      <p className="text-2xl font-semibold mt-1 flex items-center justify-start gap-2">
+                        {invoice?.oldElectric} →{" "}
+                        <Input
+                          type="number"
+                          value={newElectricValue}
+                          onChange={(e) => {
+                            setNewElectricValue(Number(e.target.value));
+                          }}
+                          className="max-w-[50%]! bg-white!"
+                          min={0}
+                        />
+                      </p>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">
                     Tiêu thụ:{" "}
                     {(invoice?.newElectric || 0) - (invoice?.oldElectric || 0)}{" "}
                     kWh
@@ -119,10 +166,25 @@ export function InvoiceDetailModal({
                     <Droplet className="w-[10%] text-muted-foreground" />
                     <span className="text-xs">Nước (m³)</span>
                   </div>
-                  <p className="text-2xl font-semibold mt-1">
-                    {invoice?.oldWater} → {invoice?.newWater}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
+                  {invoice?.newWater ? (
+                    <p className="text-2xl font-semibold mt-1">
+                      {invoice?.oldWater} → {invoice?.newWater}
+                    </p>
+                  ) : (
+                    <p className="text-2xl font-semibold mt-1 flex items-center justify-start gap-2">
+                      {invoice?.oldWater} →{" "}
+                      <Input
+                        type="number"
+                        value={newWatercValue}
+                        onChange={(e) => {
+                          setNewWaterValue(Number(e.target.value));
+                        }}
+                        className="max-w-[50%]! bg-white!"
+                        min={0}
+                      />
+                    </p>
+                  )}
+                  <p className="text-xs text-muted-foreground mt-2">
                     Tiêu thụ:{" "}
                     {(invoice?.newWater || 0) - (invoice?.oldWater || 0)} m³
                   </p>
@@ -147,7 +209,7 @@ export function InvoiceDetailModal({
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">
-                  Tiền dịch vụ
+                  Tiền dịch vụ (điện + nước)
                 </span>
                 <span className="text-sm">
                   {formatMoney(invoice?.serviceAmount)}
@@ -196,15 +258,30 @@ export function InvoiceDetailModal({
           </div>
         </div>
 
-        <div className="flex gap-3 pt-4 border-t">
-          <Button
+        <div className="flex gap-3 pt-4 border-t justify-end items-center">
+          <InvoiceActionButtons
+            status={invoice?.status}
+            handlers={{
+              onFinalize: () => mutation.mutate(),
+              onRecordPayment: () => setPaymentModalOpen(true),
+              onViewReceipt: () =>
+                window.open(`/invoices/${invoice.id}/receipt`, "_blank"),
+              onCancel: () => onOpenChange(false),
+            }}
+            loading={{
+              finalize: mutation.isPending,
+            }}
+          />
+          {/* <Button
             variant="outline"
             className="flex-1"
             onClick={() => onOpenChange(false)}
           >
             Đóng
           </Button>
-          <Button className="flex-1">Phát hành hóa đơn</Button>
+          <Button className="flex-1" onClick={() => mutation.mutate()}>
+            Chốt hoá đơn
+          </Button> */}
         </div>
       </DialogContent>
     </Dialog>
