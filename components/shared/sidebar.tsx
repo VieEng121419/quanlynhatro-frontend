@@ -10,6 +10,7 @@ import {
   FileText,
   Home,
   CreditCard,
+  NotebookTabs,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -46,19 +47,14 @@ const sidebarGroups = [
         icon: CreditCard,
         badge: null,
       },
+      {
+        title: "Sổ Ghi Nợ",
+        href: "/room-tabs",
+        icon: NotebookTabs,
+        badge: null,
+      },
     ],
   }
-//   {
-//     title: "Khác",
-//     items: [
-//       {
-//         title: "Cài Đặt",
-//         href: "/dashboard/settings",
-//         icon: Settings,
-//         badge: null,
-//       },
-//     ],
-//   },
 ];
 
 interface SidebarProps {

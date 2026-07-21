@@ -23,6 +23,7 @@ import { EditContractModal } from "@/components/contracts/edit-contract-modal";
 import { DEFAULT_CONTRACT } from "@/lib/constants/constants";
 import { InvoiceDetailModal } from "@/components/invoice/Invoice-detail-modal";
 import { toast } from "sonner";
+import { getInvoiceStatusLabel, getInvoiceStatusStyle } from "@/lib/utils";
 
 export interface Column<T> {
   key: keyof T;
@@ -35,6 +36,7 @@ interface ContractInvoice {
   totalAmount?: string | number;
   createdAt?: string | Date;
   peopleCountSnapshot?: number;
+  status: string;
 }
 
 interface RoomContract {
@@ -180,6 +182,32 @@ export default function RoomsPage() {
       },
     },
     {
+      key: "contracts",
+      header: "Trạng Thái Hoá Đơn",
+      render: (value) => {
+        const contracts = value as RoomContract[] | undefined;
+        const activeContract = contracts?.find((c) => c.isActive);
+        const latestInvoice = activeContract?.invoices?.[0];
+
+        if (!latestInvoice?.totalAmount) {
+          return <span className="text-muted-foreground">-</span>;
+        }
+
+        const status = latestInvoice?.status;
+        const style = getInvoiceStatusStyle(status);
+
+        return (
+          <div>
+            <Badge
+              className={`${style.bg} ${style.text} py-1 px-3 rounded-full text-xs font-semibold`}
+            >
+              {getInvoiceStatusLabel(status)}
+            </Badge>
+          </div>
+        );
+      },
+    },
+    {
       key: "id",
       header: "Thao Tác",
       render: (_, row: Room) => {
@@ -303,6 +331,7 @@ export default function RoomsPage() {
         onPageChange={setPage}
         filterOptions={filterOptions}
         onFilterChange={setStatusFilter}
+        textNotFound="Không tìm thấy phòng nào"
       />
 
       <BulkCreateModal

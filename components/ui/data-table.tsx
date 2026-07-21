@@ -33,6 +33,7 @@ interface DataTableProps<T> {
   meta?: PaginationMeta;
   isLoading?: boolean;
   search?: string;
+  textNotFound: string;
   onSearchChange?: (value: string) => void;
   onPageChange?: (page: number) => void;
   filterOptions?: Array<{ label: string; value: string }>;
@@ -49,6 +50,7 @@ export function DataTable<T>({
   onPageChange,
   filterOptions = [],
   onFilterChange,
+  textNotFound = 'Không tìm thấy phòng nào',
 }: DataTableProps<T>) {
   return (
     <div className="space-y-4 bg-background p-4 rounded-xl border-1 border-[#D9D9D9]">
@@ -111,7 +113,7 @@ export function DataTable<T>({
                   colSpan={columns.length + 1}
                   className="h-24 text-center text-muted-foreground"
                 >
-                  Không tìm thấy phòng nào
+                  {textNotFound}
                 </TableCell>
               </TableRow>
             ) : (
