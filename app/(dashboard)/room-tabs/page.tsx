@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { axiosClient } from "@/lib/api/axios-client";
 import { DataTable, PaginationMeta } from "@/components/ui/data-table";
@@ -8,24 +8,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 // import { Bolt, FileText, Receipt, FilePlus, Plus } from "lucide-react";
 import { Plus } from "lucide-react";
-import { BulkCreateModal } from "@/components/rooms/bulk-create-modal";
 // import {
 //   DropdownMenu,
 //   DropdownMenuContent,
 //   DropdownMenuItem,
 //   DropdownMenuTrigger,
 // } from "@/components/ui/dropdown-menu";
-import { CreateContractModal } from "@/components/contracts/create-contract-modal";
-import {
-  ContractData,
-  ViewContractModal,
-} from "@/components/contracts/view-contract-modal";
-import { EditContractModal } from "@/components/contracts/edit-contract-modal";
-import { DEFAULT_CONTRACT } from "@/lib/constants/constants";
-import { InvoiceDetailModal } from "@/components/invoice/Invoice-detail-modal";
 // import { toast } from "sonner";
 // import { getInvoiceStatusLabel, getInvoiceStatusStyle } from "@/lib/utils";
 import dayjs from "dayjs";
+import { CreateRoomTabModal } from "@/components/room-tab/create-room-tab-modal";
+import { Room } from "../rooms/page";
 
 export interface Column<T> {
   key: keyof T;
@@ -48,20 +41,7 @@ export default function RoomsPage() {
   const [limit] = useState(15);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
-  const [showBulkModal, setShowBulkModal] = useState(false);
-  const [bulkModalAlreadyShown, setBulkModalAlreadyShown] = useState(false);
-  const [selectedRoomForContract, setSelectedRoomForContract] = useState<{
-    id: number;
-    roomNumber: string;
-  } | null>(null);
-  const [selectedContractId, setSelectedContractId] = useState<number | null>(
-    null
-  );
-  const [editingContract, setEditingContract] =
-    useState<ContractData>(DEFAULT_CONTRACT);
-  const [selectedInvoiceId, setSelectedInvoiceId] = useState<number | null>(
-    null
-  );
+  const [openCreateModal, setOpenCreateModal] = useState(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ["room-tabs", page, limit, search, statusFilter],
@@ -77,6 +57,16 @@ export default function RoomsPage() {
       return response;
     },
   });
+
+  const { data: roomData } = useQuery({
+    queryKey: ["rooms", page],
+    queryFn: async () => {
+      const res = await axiosClient.get(`/room?page=1&limit=100`);
+      return res;
+    },
+  });
+
+  const rooms: Room[] = roomData?.data?.items || [];
 
   const roomsTab: RoomTab[] = data?.data || [];
   const meta: PaginationMeta | undefined = data?.data?.meta;
@@ -118,11 +108,7 @@ export default function RoomsPage() {
       key: "amount",
       header: "Giá tiền",
       render: (value) => {
-        return (
-          <span>
-            {Number(value).toLocaleString()}đ
-          </span>
-        );
+        return <span>{Number(value).toLocaleString()}đ</span>;
       },
     },
     {
@@ -200,14 +186,6 @@ export default function RoomsPage() {
     { label: "Đã nhập vào hoá đơn", value: "INVOICED" },
   ];
 
-  useEffect(() => {
-    if (data?.data?.items?.length === 0) {
-      setShowBulkModal(true);
-    } else {
-      setShowBulkModal(false);
-    }
-  }, [data, showBulkModal]);
-
   //   const handleCreateContract = (room: RoomTab) => {
   //     setSelectedRoomForContract({ id: room.id, roomNumber: room.roomNumber });
   //   };
@@ -244,9 +222,9 @@ export default function RoomsPage() {
           <h1 className="text-3xl font-bold tracking-tight">Sổ Ghi Nợ</h1>
           <p className="text-muted-foreground mt-2">Quản lý danh sách nợ</p>
         </div>
-        <Button>
+        <Button onClick={() => setOpenCreateModal(true)}>
           <Plus className="mr-2 h-4 w-4" />
-          Thêm Phòng Mới
+          Thêm Nợ Mới
         </Button>
       </div>
 
@@ -263,41 +241,10 @@ export default function RoomsPage() {
         textNotFound="Không tìm thấy công nợ nào"
       />
 
-      <BulkCreateModal
-        open={showBulkModal && !bulkModalAlreadyShown}
-        onOpenChange={(status) => {
-          setBulkModalAlreadyShown(true);
-          setShowBulkModal(status);
-        }}
-      />
-
-      <CreateContractModal
-        open={!!selectedRoomForContract}
-        onOpenChange={() => setSelectedRoomForContract(null)}
-        roomId={selectedRoomForContract?.id || 0}
-        roomNumber={selectedRoomForContract?.roomNumber || ""}
-      />
-
-      <ViewContractModal
-        open={!!selectedContractId}
-        onOpenChange={() => setSelectedContractId(null)}
-        contractId={selectedContractId}
-        onEdit={(contract: ContractData) => {
-          setEditingContract(contract);
-          setSelectedContractId(null);
-        }}
-      />
-
-      <EditContractModal
-        open={!!editingContract && !!editingContract.id}
-        onOpenChange={() => setEditingContract(DEFAULT_CONTRACT)}
-        contract={editingContract}
-      />
-
-      <InvoiceDetailModal
-        open={!!selectedInvoiceId}
-        onOpenChange={() => setSelectedInvoiceId(null)}
-        invoiceId={selectedInvoiceId}
+      <CreateRoomTabModal
+        open={openCreateModal}
+        onClose={() => setOpenCreateModal(false)}
+        roomData={rooms}
       />
     </div>
   );

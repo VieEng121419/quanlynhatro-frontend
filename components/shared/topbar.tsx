@@ -13,8 +13,44 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // import { AppSwitcher } from "./app-switcher";
 // import { ThemeToggle } from "@/components/theme-toggle";
+import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import type { AuthUser } from "@/lib/types/auth.types";
+
+function getUserInitials(user: AuthUser | null): string {
+  if (user?.fullName) {
+    const parts = user.fullName.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    return user.fullName.slice(0, 2).toUpperCase();
+  }
+  if (user?.userName) {
+    return user.userName.slice(0, 2).toUpperCase();
+  }
+  return "U";
+}
 
 export function Topbar() {
+  const router = useRouter();
+  const [user, setUser] = useState<AuthUser | null>(null);
+
+  useEffect(() => {
+    const raw = localStorage.getItem("user");
+    if (raw) {
+      try {
+        setUser(JSON.parse(raw) as AuthUser);
+      } catch {
+        setUser(null);
+      }
+    }
+  }, []);
+
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
+    router.push("/login");
+  }, [router]);
   return (
     <div className="flex h-16 items-center justify-end border-b border-[#D9DFE3] px-6 bg-[#EAEAEA] backdrop-blur w-full">
       {/* Search */}
@@ -58,9 +94,9 @@ export function Topbar() {
               className="relative h-9 w-9 rounded-full hover:bg-muted transition-colors"
             >
               <Avatar className="h-8 w-8 ring-2 ring-background">
-                <AvatarImage src="/avatar.png" alt="User" />
+                <AvatarImage src="/avatar.png" alt={user?.fullName ?? "User"} />
                 <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
-                  AD
+                  {getUserInitials(user)}
                 </AvatarFallback>
               </Avatar>
             </Button>
@@ -69,15 +105,15 @@ export function Topbar() {
             <DropdownMenuLabel className="font-normal p-3">
               <div className="flex items-center gap-3">
                 <Avatar className="h-10 w-10">
-                  <AvatarImage src="/avatar.png" alt="User" />
+                  <AvatarImage src="/avatar.png" alt={user?.fullName ?? "User"} />
                   <AvatarFallback className="bg-primary text-primary-foreground">
-                    AD
+                    {getUserInitials(user)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">Admin </p>
+                  <p className="text-sm font-medium leading-none">{user?.fullName ?? "User"}</p>
                   <p className="text-xs leading-none text-muted-foreground">
-                    admin@gmail.com
+                    {user?.userName ?? "user"}
                   </p>
                 </div>
               </div>
@@ -93,7 +129,10 @@ export function Topbar() {
               <span className="flex items-center gap-2">💳 Billing</span>
             </DropdownMenuItem> */}
             <DropdownMenuSeparator className="my-2" />
-            <DropdownMenuItem className="p-3 cursor-pointer text-red-600 hover:bg-red-50 hover:text-red-700 rounded-md transition-colors">
+            <DropdownMenuItem
+              className="p-3 cursor-pointer text-red-600 hover:bg-red-50 hover:text-red-700 rounded-md transition-colors"
+              onClick={handleLogout}
+            >
               <span className="flex items-center gap-2">🚪 Đăng xuất</span>
             </DropdownMenuItem>
           </DropdownMenuContent>

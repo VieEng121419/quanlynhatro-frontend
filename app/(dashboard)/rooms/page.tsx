@@ -48,7 +48,7 @@ interface RoomContract {
   activePeopleCount?: number;
 }
 
-interface Room {
+export interface Room {
   id: number;
   roomNumber: string;
   status: "EMPTY" | "OCCUPIED";
