@@ -104,8 +104,8 @@ export default function RootLayout({
       <body className={monaSans.className}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <QueryProvider>{children}</QueryProvider>
