@@ -217,7 +217,7 @@ export function InvoiceDetailModal({
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">
-                  Tiền dịch vụ (điện + nước)
+                  Tiền dịch vụ (điện + nước + rác 10,000đ)
                 </span>
                 <span className="text-sm">
                   {formatMoney(invoice?.serviceAmount)}
