@@ -192,12 +192,14 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `NEXT_PUBLIC_API_URL` | Backend API base URL | `https://api.nhatrotuanviet.uk/api` (prod) / `http://localhost:3001/api` (local) |
+| `NEXT_PUBLIC_API_URL` | Backend API base URL | `https://api.your-domain.com/api` (prod) / `http://localhost:3001/api` (local) |
 
 > ⚠️ **Important notes:**
 > - `NEXT_PUBLIC_*` variables are **inlined into the bundle at build time** → must be set correctly before building/deploying.
+> - `NEXT_PUBLIC_*` variables are **public by design** — they are exposed in the client-side bundle. Only put non-secret values here. **Never** put API keys, secrets, or credentials in any variable prefixed with `NEXT_PUBLIC_`.
 > - **Never commit** `.env` or `.env.local` to git (already in `.gitignore`).
 > - `.env.example` is a template — copy it to `.env` (production) or `.env.local` (local dev).
+> - Keep your real production URL only in `.env` / `.env.local` / CI secrets — not in public docs.
 
 ---
 
@@ -221,7 +223,7 @@ The project uses a **multi-stage Docker build** with `output: "standalone"` to o
 
 ```bash
 docker build \
-  --build-arg NEXT_PUBLIC_API_URL='https://api.nhatrotuanviet.uk/api' \
+  --build-arg NEXT_PUBLIC_API_URL='https://api.your-domain.com/api' \
   -t quanlynhatro-frontend .
 ```
 
