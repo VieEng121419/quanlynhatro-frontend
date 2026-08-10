@@ -79,24 +79,6 @@ export default function RootLayout({
   return (
     <html lang="vi" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/nhatrotuanviet-logo.png" />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/nhatrotuanviet-logo.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/nhatrotuanviet-logo.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/nhatrotuanviet-logo.png"
-        />
         <meta name="theme-color" content="#E15D3A" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
