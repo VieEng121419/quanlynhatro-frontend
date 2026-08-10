@@ -4,3 +4,11 @@ out
 dist
 build
 .cache
+
+# Environment variables — không commit lên git (tránh lộ secret/URL)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
