@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: "Nhà trọ Tuấn Việt",
     images: [
       {
-        url: "/nhatrotuanviet-logo.png",
+        url: "/nhatrotuanviet-preview.png",
         width: 1200,
         height: 630,
         alt: "Nhà trọ Tuấn Việt",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     title: "Quản lý nhà trọ Tuấn Việt",
     description:
       "Website quản lý nhà trọ Tuấn Việt, giúp quản lý phòng trọ, hợp đồng, hóa đơn và khách thuê một cách dễ dàng và hiệu quả.",
-    images: ["/nhatrotuanviet-logo.png"],
+    images: ["/nhatrotuanviet-preview.png"],
   },
   robots: {
     index: true,
