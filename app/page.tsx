@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import Image from "next/image";
 
 const Index = () => {
   return (
@@ -21,17 +22,23 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold text-white">DashboardOS</span>
+              <Image
+                src="/nhatrotuanviet-logo.png"
+                alt="Nhà trọ Tuấn Việt"
+                width={32}
+                height={32}
+                className="w-8 h-8 rounded-lg object-contain"
+              />
+              <span className="text-xl font-bold text-white">
+                Nhà trọ Tuấn Việt
+              </span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <a
                 href="#features"
                 className="text-gray-300 hover:text-white transition-colors"
               >
-                Features
+                Tính năng
               </a>
               <a
                 href="#demo"
@@ -43,14 +50,14 @@ const Index = () => {
                 href="#about"
                 className="text-gray-300 hover:text-white transition-colors"
               >
-                About
+                Giới thiệu
               </a>
               <Button
                 variant="outline"
                 className="border-purple-500 hover:text-white hover:bg-purple-500 bg-purple-500 text-white"
                 asChild
               >
-                <Link href="https://github.com/naveenda/shadcn-nextjs-dashboard">
+                <Link href="https://github.com/VieEng121419/quanlynhatro-frontend">
                   <Github className="w-4 h-4 mr-2" />
                   GitHub
                 </Link>
@@ -65,21 +72,20 @@ const Index = () => {
         <div className="max-w-7xl mx-auto text-center">
           <Badge className="mb-6 bg-purple-500/20 text-purple-300 border-purple-500/30">
             <Star className="w-3 h-3 mr-1" />
-            Open Source & Free Forever
+            Mã nguồn mở & Miễn phí
           </Badge>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-            Beautiful
+            Quản lý
             <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent block">
-              Dashboard
+              Nhà trọ
             </span>
-            Template
+            Tuấn Việt
           </h1>
 
           <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-            A modern, responsive dashboard UI built with Next.js 14, shadcn/ui,
-            and Tailwind CSS. Ready-to-use admin panel with beautiful components
-            and layouts.
+            Hệ thống quản lý nhà trọ Tuấn Việt, giúp quản lý phòng trọ, hợp
+            đồng, hóa đơn và khách thuê một cách dễ dàng và hiệu quả.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
@@ -89,14 +95,14 @@ const Index = () => {
               asChild
             >
               <Link href="/dashboard">
-                View Demo
+                Xem Demo
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" className="" asChild>
-              <a href="https://github.com/naveenda/shadcn-nextjs-dashboard">
+              <a href="https://github.com/VieEng121419/quanlynhatro-frontend">
                 <Github className="w-5 h-5 mr-2" />
-                View on GitHub
+                Xem trên GitHub
               </a>
             </Button>
           </div>
@@ -106,7 +112,7 @@ const Index = () => {
             <div className="text-center">
               <div className="text-2xl font-bold text-white">
                 <iframe
-                  src="https://ghbtns.com/github-btn.html?user=naveenda&repo=shadcn-nextjs-dashboard&type=star&count=true&size=large"
+                  src="https://ghbtns.com/github-btn.html?user=VieEng121419&repo=quanlynhatro-frontend&type=star&count=true&size=large"
                   frameBorder="0"
                   scrolling="0"
                   width="170"
@@ -118,7 +124,7 @@ const Index = () => {
             <div className="text-center">
               <div className="text-2xl font-bold text-white">
                 <iframe
-                  src="https://ghbtns.com/github-btn.html?user=naveenda&repo=shadcn-nextjs-dashboard&type=fork&count=true&size=large"
+                  src="https://ghbtns.com/github-btn.html?user=VieEng121419&repo=quanlynhatro-frontend&type=fork&count=true&size=large"
                   frameBorder="0"
                   scrolling="0"
                   width="170"
@@ -130,7 +136,7 @@ const Index = () => {
             <div className="text-center">
               <div className="text-2xl font-bold text-white">
                 <iframe
-                  src="https://ghbtns.com/github-btn.html?user=naveenda&repo=shadcn-nextjs-dashboard&type=watch&count=true&size=large&v=2"
+                  src="https://ghbtns.com/github-btn.html?user=VieEng121419&repo=quanlynhatro-frontend&type=watch&count=true&size=large&v=2"
                   frameBorder="0"
                   scrolling="0"
                   width="170"
@@ -148,10 +154,10 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Everything You Need to Build
+              Mọi thứ bạn cần để quản lý
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Powerful features that make dashboard development a breeze
+              Các tính năng mạnh mẽ giúp việc quản lý nhà trọ trở nên dễ dàng
             </p>
           </div>
 
@@ -162,11 +168,11 @@ const Index = () => {
                   <Zap className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">
-                  Lightning Fast
+                  Nhanh chóng
                 </h3>
                 <p className="text-gray-400">
-                  Built with Next.js 14 and optimized for performance. Get
-                  blazing fast load times out of the box.
+                  Xây dựng với Next.js 15 và tối ưu hiệu suất. Tải trang nhanh
+                  chóng ngay từ đầu.
                 </p>
               </CardContent>
             </Card>
@@ -177,11 +183,11 @@ const Index = () => {
                   <Shield className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">
-                  Enterprise Ready
+                  Sẵn sàng sản xuất
                 </h3>
                 <p className="text-gray-400">
-                  Production-ready with built-in authentication, role
-                  management, and security best practices.
+                  Sẵn sàng cho production với xác thực, quản lý vai trò và các
+                  biện pháp bảo mật tốt nhất.
                 </p>
               </CardContent>
             </Card>
@@ -192,11 +198,11 @@ const Index = () => {
                   <Code className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">
-                  Developer First
+                  Ưu tiên nhà phát triển
                 </h3>
                 <p className="text-gray-400">
-                  Clean APIs, TypeScript support, and extensive documentation.
-                  Built by developers, for developers.
+                  API sạch, hỗ trợ TypeScript và tài liệu đầy đủ. Được xây dựng
+                  bởi nhà phát triển, cho nhà phát triển.
                 </p>
               </CardContent>
             </Card>
@@ -207,11 +213,11 @@ const Index = () => {
                   <Users className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">
-                  Community Driven
+                  Quản lý đầy đủ
                 </h3>
                 <p className="text-gray-400">
-                  Join thousands of developers contributing to the future of
-                  dashboard development.
+                  Quản lý phòng trọ, hợp đồng, hóa đơn và khách thuê một cách
+                  dễ dàng và hiệu quả.
                 </p>
               </CardContent>
             </Card>
@@ -222,11 +228,11 @@ const Index = () => {
                   <Sparkles className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">
-                  Modern Design
+                  Thiết kế hiện đại
                 </h3>
                 <p className="text-gray-400">
-                  Beautiful components built with shadcn/ui and Tailwind CSS.
-                  Responsive and accessible by default.
+                  Giao diện đẹp mắt xây dựng với shadcn/ui và Tailwind CSS.
+                  Responsive và dễ tiếp cận.
                 </p>
               </CardContent>
             </Card>
@@ -237,11 +243,11 @@ const Index = () => {
                   <Github className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">
-                  Open Source
+                  Mã nguồn mở
                 </h3>
                 <p className="text-gray-400">
-                  Completely free and open source. No vendor lock-in, no hidden
-                  fees. Use it however you want.
+                  Hoàn toàn miễn phí và mã nguồn mở. Không bị ràng buộc, không
+                  phí ẩn. Sử dụng theo cách bạn muốn.
                 </p>
               </CardContent>
             </Card>
@@ -254,10 +260,10 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Get Started in Seconds
+              Bắt đầu trong vài giây
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Install and run your first dashboard with just a few commands
+              Cài đặt và chạy hệ thống quản lý nhà trọ chỉ với vài lệnh
             </p>
           </div>
 
@@ -278,7 +284,7 @@ const Index = () => {
                   <div className="text-gray-400"># Clone the repository</div>
                   <div className="text-green-400">
                     git clone
-                    https://github.com/NaveenDA/shacn-nextjs-dashboard.git
+                    https://github.com/VieEng121419/quanlynhatro-frontend.git
                   </div>
                   <div className="text-gray-400"># Install dependencies</div>
                   <div className="text-green-400">npm install</div>
@@ -287,7 +293,7 @@ const Index = () => {
                   </div>
                   <div className="text-green-400">npm run dev</div>
                   <div className="text-purple-400">
-                    🚀 Your dashboard is ready at http://localhost:3000
+                    🚀 Hệ thống sẵn sàng tại http://localhost:3000
                   </div>
                 </div>
               </CardContent>
@@ -300,11 +306,11 @@ const Index = () => {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Build Something Amazing?
+            Sẵn sàng quản lý nhà trọ của bạn?
           </h2>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join thousands of developers who are already building incredible
-            dashboards with DashboardOS.
+            Bắt đầu quản lý phòng trọ, hợp đồng, hóa đơn và khách thuê một cách
+            dễ dàng với Nhà trọ Tuấn Việt.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -314,7 +320,7 @@ const Index = () => {
               asChild
             >
               <Link href="/dashboard">
-                View Demo
+                Xem Demo
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </Button>
@@ -324,7 +330,7 @@ const Index = () => {
               className="border-gray-600  hover:bg-black px-8 py-6 text-lg text-black hover:text-white hover:border-black "
               asChild
             >
-              <Link href="https://github.com/naveenda/shadcn-nextjs-dashboard">
+              <Link href="https://github.com/VieEng121419/quanlynhatro-frontend">
                 <Github className="w-5 h-5 mr-2" />
                 GitHub
               </Link>
@@ -342,16 +348,20 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-white" />
-                </div>
+                <Image
+                  src="/nhatrotuanviet-logo.png"
+                  alt="Nhà trọ Tuấn Việt"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded-lg object-contain"
+                />
                 <span className="text-xl font-bold text-white">
-                  DashboardOS
+                  Nhà trọ Tuấn Việt
                 </span>
               </div>
               <p className="text-gray-400 mb-4 max-w-md">
-                The open-source dashboard framework that makes building admin
-                panels a joy. Created with ❤️ by NaveenDA and the community.
+                Hệ thống quản lý nhà trọ Tuấn Việt, giúp quản lý phòng trọ, hợp
+                đồng, hóa đơn và khách thuê một cách dễ dàng và hiệu quả.
               </p>
               <div className="flex space-x-4">
                 <Button
@@ -360,7 +370,7 @@ const Index = () => {
                   className="text-gray-400 hover:text-white hover:bg-black"
                   asChild
                 >
-                  <Link href="https://github.com/naveenda/shadcn-nextjs-dashboard">
+                  <Link href="https://github.com/VieEng121419/quanlynhatro-frontend">
                     <Github className="w-5 h-5" />
                   </Link>
                 </Button>
@@ -370,7 +380,7 @@ const Index = () => {
                   className="text-gray-400 hover:text-white hover:bg-black"
                   asChild
                 >
-                  <Link href="https://github.com/naveenda/shadcn-nextjs-dashboard">
+                  <Link href="https://github.com/VieEng121419/quanlynhatro-frontend">
                     <Star className="w-5 h-5" />
                   </Link>
                 </Button>
@@ -380,8 +390,7 @@ const Index = () => {
 
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
             <p>
-              &copy; 2024 DashboardOS. Built by NaveenDA. Open source under MIT
-              License.
+              &copy; 2026 Nhà trọ Tuấn Việt. Mã nguồn mở theo giấy phép MIT.
             </p>
           </div>
         </div>

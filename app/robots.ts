@@ -13,6 +13,6 @@ export default function robots(): MetadataRoute.Robots {
 				"/admin/",
 			],
 		},
-		sitemap: "https://shadcn-nextjs-dashboard.vercel.app/sitemap.xml",
+		sitemap: "https://nhatrotuanviet.uk/sitemap.xml",
 	};
 }

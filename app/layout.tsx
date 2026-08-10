@@ -20,41 +20,41 @@ export const metadata: Metadata = {
     "quản lý khách thuê",
     "trọ",
   ],
-  authors: [{ name: "Dashboard Template" }],
-  creator: "Dashboard Template",
-  publisher: "Dashboard Template",
+  authors: [{ name: "Nhà trọ Tuấn Việt" }],
+  creator: "Nhà trọ Tuấn Việt",
+  publisher: "Nhà trọ Tuấn Việt",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://shadcn-nextjs-dashboard.vercel.app"),
+  metadataBase: new URL("https://nhatrotuanviet.uk"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
-    locale: "en_US",
-    url: "https://shadcn-nextjs-dashboard.vercel.app",
-    title: "Modern Dashboard Template - Next.js 14 & shadcn/ui",
+    locale: "vi_VN",
+    url: "https://nhatrotuanviet.uk",
+    title: "Quản lý nhà trọ Tuấn Việt",
     description:
-      "A beautiful, responsive dashboard template built with Next.js 14, shadcn/ui, and Tailwind CSS. Ready-to-use admin panel with modern UI components.",
-    siteName: "Dashboard Template",
+      "Website quản lý nhà trọ Tuấn Việt, giúp quản lý phòng trọ, hợp đồng, hóa đơn và khách thuê một cách dễ dàng và hiệu quả.",
+    siteName: "Nhà trọ Tuấn Việt",
     images: [
       {
-        url: "/og-image.png",
+        url: "/nhatrotuanviet-logo.png",
         width: 1200,
         height: 630,
-        alt: "Modern Dashboard Template Preview",
+        alt: "Nhà trọ Tuấn Việt",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Modern Dashboard Template - Next.js 14 & shadcn/ui",
+    title: "Quản lý nhà trọ Tuấn Việt",
     description:
-      "A beautiful, responsive dashboard template built with Next.js 14, shadcn/ui, and Tailwind CSS.",
-    images: ["/og-image.png"],
+      "Website quản lý nhà trọ Tuấn Việt, giúp quản lý phòng trọ, hợp đồng, hóa đơn và khách thuê một cách dễ dàng và hiệu quả.",
+    images: ["/nhatrotuanviet-logo.png"],
   },
   robots: {
     index: true,
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     },
   },
   category: "technology",
-  classification: "Dashboard Template",
+  classification: "Nhà trọ Tuấn Việt",
 };
 
 export default function RootLayout({
@@ -77,28 +77,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="vi" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/nhatrotuanviet-logo.png" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="/apple-touch-icon.png"
+          href="/nhatrotuanviet-logo.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href="/favicon-32x32.png"
+          href="/nhatrotuanviet-logo.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href="/favicon-16x16.png"
+          href="/nhatrotuanviet-logo.png"
         />
-        <link rel="manifest" href="/site.webmanifest" />
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#E15D3A" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={monaSans.className}>

@@ -13,6 +13,7 @@ import {
   NotebookTabs,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const sidebarGroups = [
   {
@@ -82,9 +83,13 @@ export function Sidebar({ onMobileClose }: SidebarProps) {
       <div className="border-b px-2 p-2 relative">
         {!isCollapsed && (
           <Link href="/dashboard" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 rounded-lg bg-[#E15D3A] flex items-center justify-center">
-              <Home className="w-4 h-4 text-primary-foreground" />
-            </div>
+            <Image
+              src="/nhatrotuanviet-logo.png"
+              alt="Nhà trọ Tuấn Việt"
+              width={32}
+              height={32}
+              className="w-8 h-8 rounded-lg object-contain"
+            />
             <span className="text-xl font-bold group-hover:text-primary transition-colors">
               Quản Lý Trọ
             </span>
@@ -92,7 +97,13 @@ export function Sidebar({ onMobileClose }: SidebarProps) {
         )}
         {isCollapsed && (
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center mx-auto">
-            <Home className="w-4 h-4 text-primary-foreground" />
+            <Image
+              src="/nhatrotuanviet-logo.png"
+              alt="Nhà trọ Tuấn Việt"
+              width={32}
+              height={32}
+              className="w-8 h-8 rounded-lg object-contain"
+            />
           </div>
         )}
         <Button
