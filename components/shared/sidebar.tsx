@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -65,6 +65,19 @@ interface SidebarProps {
 export function Sidebar({ onMobileClose }: SidebarProps) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Tự động thu gọn sidebar khi màn hình nhỏ (< 900px)
+  useEffect(() => {
+    const handleResize = () => {
+      setIsCollapsed(window.innerWidth < 900);
+    };
+
+    // Chạy ngay khi mount để set đúng trạng thái ban đầu
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleLinkClick = () => {
     if (onMobileClose) {
