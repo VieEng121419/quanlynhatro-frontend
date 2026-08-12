@@ -38,6 +38,9 @@ interface DataTableProps<T> {
   onPageChange?: (page: number) => void;
   filterOptions?: Array<{ label: string; value: string }>;
   onFilterChange?: (value: string) => void;
+  limit?: number;
+  limitOptions?: number[];
+  onLimitChange?: (limit: number) => void;
 }
 
 export function DataTable<T>({
@@ -50,7 +53,10 @@ export function DataTable<T>({
   onPageChange,
   filterOptions = [],
   onFilterChange,
-  textNotFound = 'Không tìm thấy phòng nào',
+  textNotFound = "Không tìm thấy phòng nào",
+  limit = 15,
+  limitOptions = [5, 10, 15, 20, 50],
+  onLimitChange,
 }: DataTableProps<T>) {
   return (
     <div className="space-y-4 bg-background p-4 rounded-xl border-1 border-[#D9D9D9]">
@@ -141,9 +147,23 @@ export function DataTable<T>({
       {/* Pagination */}
       {meta && onPageChange && (
         <div className="flex items-center justify-between text-sm">
-          <p className="text-muted-foreground">
-            Hiển thị {data.length} trong tổng {meta.totalItems} phòng
-          </p>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <span>Hiển thị</span>
+            <select
+              value={limit}
+              onChange={(e) => {
+                onLimitChange?.(Number(e.target.value));
+              }}
+              className="border border-input bg-[#EAEAEA] rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+            >
+              {limitOptions.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+            <span>trong tổng {meta.totalItems} phòng</span>
+          </div>
           <div className="flex items-center gap-2">
             <Button
               variant="outline"

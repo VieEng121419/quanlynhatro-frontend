@@ -58,7 +58,7 @@ export interface Room {
 
 export default function RoomsPage() {
   const [page, setPage] = useState(1);
-  const [limit] = useState(15);
+  const [limit, setLimit] = useState(15);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [showBulkModal, setShowBulkModal] = useState(false);
@@ -331,6 +331,8 @@ export default function RoomsPage() {
         onPageChange={setPage}
         filterOptions={filterOptions}
         onFilterChange={setStatusFilter}
+        limit={limit}
+        onLimitChange={setLimit}
         textNotFound="Không tìm thấy phòng nào"
       />
 
