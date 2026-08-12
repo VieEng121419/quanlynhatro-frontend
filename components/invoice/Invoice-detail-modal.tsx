@@ -32,8 +32,8 @@ export function InvoiceDetailModal({
   invoiceId,
 }: InvoiceDetailModalProps) {
   const queryClient = useQueryClient();
-  const [newElectricValue, setNewElectricValue] = useState(0);
-  const [newWatercValue, setNewWaterValue] = useState(0);
+  const [newElectricValue, setNewElectricValue] = useState<number | null>(null);
+  const [newWatercValue, setNewWaterValue] = useState<number | null>(null);
 
   const [isPaymentModalOpen, setPaymentModalOpen] = useState(false);
 
@@ -48,8 +48,8 @@ export function InvoiceDetailModal({
   const mutation = useMutation({
     mutationFn: () => {
       return axiosClient.patch(`/invoice/${invoiceId}/counter`, {
-        newElectric: newElectricValue,
-        newWater: newWatercValue,
+        newElectric: newElectricValue ?? 0,
+        newWater: newWatercValue ?? 0,
       });
     },
     onSuccess: () => {
@@ -57,8 +57,8 @@ export function InvoiceDetailModal({
       queryClient.invalidateQueries({ queryKey: ["rooms"] });
       queryClient.invalidateQueries({ queryKey: ["invoice", invoiceId] });
       //   onOpenChange(false);
-      setNewElectricValue(0);
-      setNewWaterValue(0);
+      setNewElectricValue(null);
+      setNewWaterValue(null);
     },
     onError: (err) => {
       toast.error(err?.message || "Tạo hợp đồng thất bại");
@@ -147,12 +147,15 @@ export function InvoiceDetailModal({
                         {invoice?.oldElectric} →{" "}
                         <Input
                           type="number"
-                          value={newElectricValue}
+                          value={newElectricValue ?? ""}
                           onChange={(e) => {
-                            setNewElectricValue(Number(e.target.value));
+                            setNewElectricValue(
+                              e.target.value === ""
+                                ? null
+                                : Number(e.target.value),
+                            );
                           }}
                           className="max-w-[50%]! bg-white!"
-                          min={0}
                         />
                       </p>
                     )}
@@ -181,9 +184,13 @@ export function InvoiceDetailModal({
                       {invoice?.oldWater} →{" "}
                       <Input
                         type="number"
-                        value={newWatercValue}
+                        value={newWatercValue ?? ""}
                         onChange={(e) => {
-                          setNewWaterValue(Number(e.target.value));
+                          setNewWaterValue(
+                            e.target.value === ""
+                              ? null
+                              : Number(e.target.value),
+                          );
                         }}
                         className="max-w-[50%]! bg-white!"
                         min={0}
