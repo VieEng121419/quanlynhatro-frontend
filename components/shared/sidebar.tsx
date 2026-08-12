@@ -17,19 +17,14 @@ import Image from "next/image";
 
 const sidebarGroups = [
   {
-    title: "Tổng Quan",
+    title: "Quản Lý",
     items: [
       {
-        title: "Dashboard",
+        title: "Tổng quan",
         href: "/dashboard",
         icon: LayoutDashboard,
         badge: null,
-      }
-    ],
-  },
-  {
-    title: "Quản Lý",
-    items: [
+      },
       {
         title: "Phòng Trọ",
         href: "/rooms",
@@ -55,7 +50,7 @@ const sidebarGroups = [
         badge: null,
       },
     ],
-  }
+  },
 ];
 
 interface SidebarProps {
@@ -122,7 +117,11 @@ export function Sidebar({ onMobileClose }: SidebarProps) {
         <Button
           variant="ghost"
           size="icon"
-          className={` h-8 w-8 hover:bg-muted absolute ${!isCollapsed ? "top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2" : "top-1/2 -right-10 transform -translate-x-1/2 -translate-y-1/2 border rounded-full p-0.5 z-99 bg-white"}`}
+          className={` h-8 w-8 hover:bg-muted absolute ${
+            !isCollapsed
+              ? "top-1/2 right-0 transform -translate-x-1/2 -translate-y-1/2"
+              : "top-1/2 -right-10 transform -translate-x-1/2 -translate-y-1/2 border rounded-full p-0.5 z-99 bg-white"
+          }`}
           onClick={() => setIsCollapsed(!isCollapsed)}
         >
           {isCollapsed ? (
@@ -136,7 +135,7 @@ export function Sidebar({ onMobileClose }: SidebarProps) {
       {/* Navigation Groups */}
       <nav className="flex-1 space-y-8">
         {sidebarGroups.map((group) => (
-          <div key={group.title} className="space-y-1">
+          <div key={group.title}>
             {!isCollapsed && (
               <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 mt-4">
                 {group.title}
