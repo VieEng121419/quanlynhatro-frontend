@@ -19,6 +19,7 @@ export function useRecordPayment(invoiceId: number) {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["invoice", invoiceId] });
       qc.invalidateQueries({ queryKey: ["invoices"] });
+      qc.invalidateQueries({ queryKey: ["rooms"] });
     },
   });
 }
