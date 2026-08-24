@@ -6,8 +6,9 @@ import { axiosClient } from "@/lib/api/axios-client";
 import { DataTable, PaginationMeta } from "@/components/ui/data-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Bolt, FileText, Receipt, FilePlus, Plus } from "lucide-react";
+import { Bolt, FileText, Receipt, FilePlus, Plus, QrCode } from "lucide-react";
 import { BulkCreateModal } from "@/components/rooms/bulk-create-modal";
+import { GenerateQrModal } from "@/components/rooms/generate-qr-modal";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,6 +47,7 @@ interface RoomContract {
   isActive: boolean;
   invoices: ContractInvoice[];
   activePeopleCount?: number;
+  userId?: number;
 }
 
 export interface Room {
@@ -75,6 +77,11 @@ export default function RoomsPage() {
   const [selectedInvoiceId, setSelectedInvoiceId] = useState<number | null>(
     null
   );
+  const [selectedRoomForQr, setSelectedRoomForQr] = useState<{
+    id: number;
+    roomNumber: string;
+    userId: number;
+  } | null>(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["rooms", page, limit, search, statusFilter],
@@ -253,6 +260,13 @@ export default function RoomsPage() {
                       <Receipt className="mr-2 h-4 w-4" />
                       <span className="text-sm font-light">Xem Hóa Đơn</span>
                     </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleGenerateQr(row)}
+                      className="cursor-pointer"
+                    >
+                      <QrCode className="mr-2 h-4 w-4" />
+                      <span className="text-sm font-light">Tạo Mã QR</span>
+                    </DropdownMenuItem>
                   </>
                 )}
               </DropdownMenuContent>
@@ -304,6 +318,21 @@ export default function RoomsPage() {
     }
 
     setSelectedInvoiceId(activeInvoiceId);
+  };
+
+  const handleGenerateQr = (room: Room) => {
+    const activeContract = room.contracts?.find((c) => c.isActive);
+
+    if (!activeContract?.userId) {
+      toast.error("Phòng chưa có tài khoản người thuê!");
+      return;
+    }
+
+    setSelectedRoomForQr({
+      id: room.id,
+      roomNumber: room.roomNumber,
+      userId: activeContract.userId,
+    });
   };
 
   return (
@@ -371,6 +400,14 @@ export default function RoomsPage() {
         open={!!selectedInvoiceId}
         onOpenChange={() => setSelectedInvoiceId(null)}
         invoiceId={selectedInvoiceId}
+      />
+
+      <GenerateQrModal
+        open={!!selectedRoomForQr}
+        onOpenChange={() => setSelectedRoomForQr(null)}
+        roomId={selectedRoomForQr?.id || 0}
+        roomNumber={selectedRoomForQr?.roomNumber || ""}
+        userId={selectedRoomForQr?.userId || 0}
       />
     </div>
   );
