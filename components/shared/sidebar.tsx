@@ -11,6 +11,7 @@ import {
   Home,
   CreditCard,
   NotebookTabs,
+  Bell,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -47,6 +48,12 @@ const sidebarGroups = [
         title: "Sổ Ghi Nợ",
         href: "/room-tabs",
         icon: NotebookTabs,
+        badge: null,
+      },
+      {
+        title: "Thông báo",
+        href: "/notifications",
+        icon: Bell,
         badge: null,
       },
     ],

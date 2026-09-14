@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosClient } from "@/lib/api/axios-client";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,6 +20,13 @@ import { toast } from "sonner";
 import dayjs from "dayjs";
 import { CurrencyInput } from "../ui/currency-input";
 import { Spinner } from "../ui/spinner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 // Zod schema theo DTO
 const createContractSchema = z
@@ -47,6 +54,7 @@ const createContractSchema = z
     activePeopleCount: z.number().optional(),
     basePeopleLimit: z.number().optional(),
     extraPersonFee: z.number().optional(),
+    userId: z.string().min(1, "Vui lòng chọn khách thuê"),
   })
   .refine(
     (data) => {
@@ -76,6 +84,12 @@ export function CreateContractModal({
   roomNumber,
 }: CreateContractModalProps) {
   const queryClient = useQueryClient();
+  const { data: tenantResponse, isLoading: tenantsLoading } = useQuery({
+    queryKey: ["active-tenants"],
+    queryFn: () => axiosClient.get("/auth/tenants"),
+    enabled: open,
+  });
+  const tenants = tenantResponse?.data ?? tenantResponse ?? [];
 
   const {
     register,
@@ -94,12 +108,13 @@ export function CreateContractModal({
       basePeopleLimit: 2,
       extraPersonFee: 0,
       startDate: dayjs().format("YYYY-MM-DD"),
+      userId: "",
     },
   });
 
   const mutation = useMutation({
     mutationFn: (data: CreateContractForm) =>
-      axiosClient.post("/contract", { ...data, roomId }),
+      axiosClient.post("/contract", { ...data, roomId, userId: Number(data.userId) }),
     onSuccess: () => {
       toast.success(`Tạo hợp đồng cho phòng ${roomNumber} thành công!`);
       queryClient.invalidateQueries({ queryKey: ["rooms"] });
@@ -137,6 +152,15 @@ export function CreateContractModal({
           onSubmit={handleSubmit(onSubmit)}
           className="space-y-4 border-t pt-4"
         >
+          <div>
+            <Label>Khách thuê (tài khoản)</Label>
+            <Select onValueChange={(value) => setValue("userId", value, { shouldValidate: true })} disabled={mutation.isPending || tenantsLoading}>
+              <SelectTrigger><SelectValue placeholder="Chọn khách thuê" /></SelectTrigger>
+              <SelectContent>{tenants.map((tenant: { id: number; fullName: string; userName: string }) => <SelectItem key={tenant.id} value={String(tenant.id)}>{tenant.fullName} ({tenant.userName})</SelectItem>)}</SelectContent>
+            </Select>
+            {errors.userId && <p className="text-red-500 text-xs mt-1">{errors.userId.message}</p>}
+          </div>
+
           <div>
             <Label>
               Tên Khách Thuê <span className="text-red-500">*</span>

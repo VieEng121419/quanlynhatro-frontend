@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosClient } from "@/lib/api/axios-client";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,6 +20,7 @@ import { ContractData } from "./view-contract-modal";
 import { useEffect } from "react";
 import { Spinner } from "../ui/spinner";
 import dayjs from "dayjs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 const editContractSchema = z
   .object({
@@ -44,6 +45,7 @@ const editContractSchema = z
     activePeopleCount: z.number().optional(),
     basePeopleLimit: z.number().optional(),
     extraPersonFee: z.number().optional(),
+    userId: z.string().min(1, "Vui lòng chọn khách thuê"),
   })
   .refine(
     (data) => {
@@ -71,6 +73,12 @@ export function EditContractModal({
   contract,
 }: EditContractModalProps) {
   const queryClient = useQueryClient();
+  const { data: tenantResponse, isLoading: tenantsLoading } = useQuery({
+    queryKey: ["active-tenants"],
+    queryFn: () => axiosClient.get("/auth/tenants"),
+    enabled: open,
+  });
+  const tenants = tenantResponse?.data ?? tenantResponse ?? [];
 
   const {
     register,
@@ -92,6 +100,7 @@ export function EditContractModal({
       activePeopleCount: contract?.activePeopleCount || 2,
       basePeopleLimit: contract?.basePeopleLimit || 2,
       extraPersonFee: Number(contract?.extraPersonFee) || 0,
+      userId: contract?.userId ? String(contract.userId) : "",
     },
   });
 
@@ -100,6 +109,7 @@ export function EditContractModal({
       axiosClient.put(`/contract/${contract?.id}`, {
         ...data,
         endDate: data.endDate !== "" ? data.endDate : null,
+        userId: Number(data.userId),
       }),
     onSuccess: () => {
       toast.success("Cập nhật hợp đồng thành công");
@@ -128,6 +138,7 @@ export function EditContractModal({
         activePeopleCount: contract.activePeopleCount || 2,
         basePeopleLimit: contract.basePeopleLimit || 2,
         extraPersonFee: Number(contract.extraPersonFee) || 0,
+        userId: contract.userId ? String(contract.userId) : "",
       });
     }
   }, [contract, open, reset]);
@@ -166,6 +177,14 @@ export function EditContractModal({
               NGƯỜI THUÊ
             </Label>
             <div className="space-y-4 mt-2">
+              <div>
+                <Label>Tài khoản khách thuê</Label>
+                <Select value={watch("userId")} onValueChange={(value) => setValue("userId", value, { shouldValidate: true })} disabled={mutation.isPending || tenantsLoading}>
+                  <SelectTrigger><SelectValue placeholder="Chọn khách thuê" /></SelectTrigger>
+                  <SelectContent>{tenants.map((tenant: { id: number; fullName: string; userName: string }) => <SelectItem key={tenant.id} value={String(tenant.id)}>{tenant.fullName} ({tenant.userName})</SelectItem>)}</SelectContent>
+                </Select>
+                {errors.userId && <p className="text-red-500 text-xs mt-1">{errors.userId.message}</p>}
+              </div>
               <div>
                 <Label>Tên người thuê</Label>
                 <Input
@@ -293,7 +312,7 @@ export function EditContractModal({
             </div>
           </div>
 
-          <div className="flex gap-3 pt-6">
+          <div className="flex gap-3">
             <Button
               type="button"
               variant="outline"

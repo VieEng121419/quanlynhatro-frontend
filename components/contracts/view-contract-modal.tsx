@@ -31,6 +31,7 @@ export interface ContractData {
   basePeopleLimit?: number;
   extraPersonFee?: number;
   isActive: boolean;
+  userId?: number;
   room?: {
     id: number;
     roomNumber: string;
