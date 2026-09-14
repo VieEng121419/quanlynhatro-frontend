@@ -46,9 +46,9 @@ export default function NotificationsPage() {
     <div className="mx-auto max-w-7xl space-y-6">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-3xl font-bold">Thông báo tenant</h1>
+          <h1 className="text-3xl font-bold">Thông báo</h1>
           <p className="text-muted-foreground">
-            Lịch sử thông báo chung gửi đến tenant đang thuê phòng.
+            Lịch sử thông báo chung gửi đến khách thuê đang thuê phòng.
           </p>
         </div>
         <Button onClick={() => setOpen(true)}>
