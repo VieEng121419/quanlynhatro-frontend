@@ -151,4 +151,12 @@
 	.card-elevated {
 		@apply shadow-sm hover:shadow-md transition-shadow duration-200;
 	}
+
+	.rounded-button-input {
+		border-radius: 12px;
+	}
+
+	.text-button-input {
+		font-size: 12px
+	}
 }

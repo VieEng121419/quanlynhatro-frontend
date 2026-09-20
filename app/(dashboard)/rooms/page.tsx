@@ -4,6 +4,14 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { axiosClient } from "@/lib/api/axios-client";
 import { DataTable, PaginationMeta } from "@/components/ui/data-table";
+// import { Input } from "@/components/ui/input";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Grid2X2,
+  Search,
+  Table2,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Bolt, FileText, Receipt, FilePlus, Plus, QrCode } from "lucide-react";
@@ -25,6 +33,12 @@ import { DEFAULT_CONTRACT } from "@/lib/constants/constants";
 import { InvoiceDetailModal } from "@/components/invoice/Invoice-detail-modal";
 import { toast } from "sonner";
 import { getInvoiceStatusLabel, getInvoiceStatusStyle } from "@/lib/utils";
+import { RoomCardGrid } from "@/components/rooms/room-card-grid";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
 
 export interface Column<T> {
   key: keyof T;
@@ -63,6 +77,9 @@ export default function RoomsPage() {
   const [limit, setLimit] = useState(15);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+  const [viewMode, setViewMode] = useState<string>(() => {
+    return localStorage.getItem("savedViewMode") || "table";
+  });
   const [showBulkModal, setShowBulkModal] = useState(false);
   const [bulkModalAlreadyShown, setBulkModalAlreadyShown] = useState(false);
   const [selectedRoomForContract, setSelectedRoomForContract] = useState<{
@@ -284,6 +301,20 @@ export default function RoomsPage() {
   ];
 
   useEffect(() => {
+    const savedViewMode = window.localStorage.getItem("rooms-view-mode");
+    if (savedViewMode === "table" || savedViewMode === "card") {
+      setViewMode(savedViewMode);
+    } else if (window.matchMedia("(max-width: 767px)").matches) {
+      setViewMode("card");
+    }
+  }, []);
+
+  const handleViewModeChange = (nextViewMode: "table" | "card") => {
+    setViewMode(nextViewMode);
+    window.localStorage.setItem("rooms-view-mode", nextViewMode);
+  };
+
+  useEffect(() => {
     if (data?.data?.items?.length === 0) {
       setShowBulkModal(true);
     } else {
@@ -350,20 +381,138 @@ export default function RoomsPage() {
         </Button>
       </div>
 
-      <DataTable<Room>
-        data={rooms}
-        columns={columns}
-        meta={meta}
-        isLoading={isLoading}
-        search={search}
-        onSearchChange={setSearch}
-        onPageChange={setPage}
-        filterOptions={filterOptions}
-        onFilterChange={setStatusFilter}
-        limit={limit}
-        onLimitChange={setLimit}
-        textNotFound="Không tìm thấy phòng nào"
-      />
+      <div className="space-y-4 rounded-xl border border-[#D9D9D9] bg-background p-4">
+        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+          <InputGroup className="max-w-sm">
+            <InputGroupInput
+              placeholder="Tìm theo số phòng..."
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+            <InputGroupAddon>
+              <Search />
+            </InputGroupAddon>
+          </InputGroup>
+          <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
+            <select
+              id="statusFilter"
+              name="statusFilter"
+              value={statusFilter}
+              onChange={(event) => setStatusFilter(event.target.value)}
+              className="max-sm:w-[72%] h-[36px] rounded-button-input border border-[#E2E8F0] bg-[#FFFFFF] px-1 py-1 text-button-input focus:outline-none focus:ring-2 focus:ring-ring"
+            >
+              <option value="">Tất cả trạng thái</option>
+              {filterOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <div
+              className="flex justify-between items-center rounded-button-input border bg-muted p-0.5"
+              aria-label="Chọn kiểu hiển thị"
+            >
+              <Button
+                type="button"
+                variant={viewMode === "table" ? "secondary" : "ghost"}
+                size="sm"
+                className={
+                  viewMode === "table"
+                    ? "gap-2 rounded-lg bg-white"
+                    : "gap-2 rounded-l-button-input"
+                }
+                onClick={() => handleViewModeChange("table")}
+              >
+                <Table2
+                  className={
+                    viewMode === "table" ? "h-4 w-4 text-[#E05338]" : "h-4 w-4"
+                  }
+                />
+                <span className="hidden sm:inline text-button-input">Bảng</span>
+              </Button>
+              <Button
+                type="button"
+                variant={viewMode === "card" ? "secondary" : "ghost"}
+                size="sm"
+                className={
+                  viewMode === "card"
+                    ? "gap-2 rounded-lg bg-white"
+                    : "gap-2 rounded-r-button-input"
+                }
+                onClick={() => handleViewModeChange("card")}
+              >
+                <Grid2X2
+                  className={
+                    viewMode === "card" ? "h-4 w-4 text-[#E05338]" : "h-4 w-4"
+                  }
+                />
+                <span className="hidden sm:inline text-button-input">Thẻ</span>
+              </Button>
+            </div>
+          </div>
+        </div>
+        {viewMode === "table" ? (
+          <DataTable<Room>
+            data={rooms}
+            columns={columns}
+            isLoading={isLoading}
+            textNotFound="Không tìm thấy phòng nào"
+          />
+        ) : (
+          <RoomCardGrid
+            data={rooms}
+            isLoading={isLoading}
+            textNotFound="Không tìm thấy phòng nào"
+            onCreateContract={handleCreateContract}
+            onViewContract={handleViewContract}
+            onViewInvoices={handleViewInvoices}
+            onGenerateQr={handleGenerateQr}
+          />
+        )}
+        {meta && (
+          <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <span>Hiển thị</span>
+              <select
+                value={limit}
+                onChange={(event) => {
+                  setLimit(Number(event.target.value));
+                  setPage(1);
+                }}
+                className="rounded-md border border-input bg-[#EAEAEA] px-2 py-1 text-sm"
+              >
+                {[5, 10, 15, 20, 50].map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              <span>trong tổng {meta.totalItems} phòng</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setPage(meta.currentPage - 1)}
+                disabled={meta.currentPage <= 1}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <span className="rounded-md border px-3 py-1">
+                {meta.currentPage} / {meta.totalPages}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setPage(meta.currentPage + 1)}
+                disabled={meta.currentPage >= meta.totalPages}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
 
       <BulkCreateModal
         open={showBulkModal && !bulkModalAlreadyShown}

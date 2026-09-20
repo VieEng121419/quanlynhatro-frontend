@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { axiosClient } from "@/lib/api/axios-client";
-import { DataTable, PaginationMeta } from "@/components/ui/data-table";
+import { DataTable } from "@/components/ui/data-table";
+import { Input } from "@/components/ui/input";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 // import { Bolt, FileText, Receipt, FilePlus, Plus } from "lucide-react";
@@ -69,7 +71,7 @@ export default function RoomsPage() {
   const rooms: Room[] = roomData?.data?.items || [];
 
   const roomsTab: RoomTab[] = data?.data || [];
-  const meta: PaginationMeta | undefined = data?.data?.meta;
+  const meta = data?.data?.meta;
 
   const columns: Column<RoomTab>[] = [
     {
@@ -228,18 +230,17 @@ export default function RoomsPage() {
         </Button>
       </div>
 
-      <DataTable<RoomTab>
-        data={roomsTab}
-        columns={columns}
-        meta={meta}
-        isLoading={isLoading}
-        search={search}
-        onSearchChange={setSearch}
-        onPageChange={setPage}
-        filterOptions={filterOptions}
-        onFilterChange={setStatusFilter}
-        textNotFound="Không tìm thấy công nợ nào"
-      />
+      <div className="space-y-4 rounded-xl border border-[#D9D9D9] bg-background p-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <Input placeholder="Tìm theo mã phòng..." value={search} onChange={(event) => setSearch(event.target.value)} className="max-w-sm" />
+          <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)} className="rounded-md border border-input bg-[#EAEAEA] px-3 py-2 text-sm">
+            <option value="">Tất cả trạng thái</option>
+            {filterOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+          </select>
+        </div>
+        <DataTable<RoomTab> data={roomsTab} columns={columns} isLoading={isLoading} textNotFound="Không tìm thấy công nợ nào" />
+        {meta && <div className="flex items-center justify-end gap-2 text-sm"><span className="text-muted-foreground">{meta.currentPage} / {meta.totalPages}</span><Button variant="outline" size="sm" onClick={() => setPage(meta.currentPage - 1)} disabled={meta.currentPage <= 1}><ChevronLeft className="h-4 w-4" /></Button><Button variant="outline" size="sm" onClick={() => setPage(meta.currentPage + 1)} disabled={meta.currentPage >= meta.totalPages}><ChevronRight className="h-4 w-4" /></Button></div>}
+      </div>
 
       <CreateRoomTabModal
         open={openCreateModal}
