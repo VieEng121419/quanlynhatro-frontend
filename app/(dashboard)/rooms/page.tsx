@@ -368,8 +368,10 @@ export default function RoomsPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Phòng Trọ</h1>
-          <p className="text-muted-foreground mt-2">
+          <h1 className="max-sm:text-[20px] lg:text-3xl font-bold tracking-tight">
+            Phòng Trọ
+          </h1>
+          <p className="text-muted-foreground max-sm:text-xs lg:text-sm mt-2">
             Quản lý danh sách phòng và tình trạng thuê
           </p>
         </div>
