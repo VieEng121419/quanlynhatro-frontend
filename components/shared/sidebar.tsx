@@ -113,8 +113,8 @@ export function Sidebar({ onMobileClose }: SidebarProps) {
       </Button>
       <div
         className={cn(
-          "flex h-full flex-col border-r shadow-sm transition-all duration-300 bg-[#DEDEDE] absolute z-10",
-          isCollapsed ? "w-16 p-1 -left-100" : "w-72 px-6 py-2"
+          "flex h-full flex-col border-r shadow-sm transition-all duration-300 bg-[#DEDEDE] absolute z-10 w-72 px-6 py-2",
+          isCollapsed ? "-left-100" : ""
         )}
       >
         {/* Logo */}
