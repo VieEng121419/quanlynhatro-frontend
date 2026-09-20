@@ -77,9 +77,7 @@ export default function RoomsPage() {
   const [limit, setLimit] = useState(15);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
-  const [viewMode, setViewMode] = useState<string>(() => {
-    return localStorage.getItem("savedViewMode") || "table";
-  });
+  const [viewMode, setViewMode] = useState<string>("table");
   const [showBulkModal, setShowBulkModal] = useState(false);
   const [bulkModalAlreadyShown, setBulkModalAlreadyShown] = useState(false);
   const [selectedRoomForContract, setSelectedRoomForContract] = useState<{
