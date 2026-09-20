@@ -472,7 +472,7 @@ export default function RoomsPage() {
         {meta && (
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-2 text-muted-foreground">
-              <span>Hiển thị</span>
+              <span className="max-sm:hidden">Hiển thị</span>
               <select
                 value={limit}
                 onChange={(event) => {
@@ -487,7 +487,7 @@ export default function RoomsPage() {
                   </option>
                 ))}
               </select>
-              <span>trong tổng {meta.totalItems} phòng</span>
+              <span className="max-sm:hidden">trong tổng {meta.totalItems} phòng</span>
             </div>
             <div className="flex items-center gap-2">
               <Button
