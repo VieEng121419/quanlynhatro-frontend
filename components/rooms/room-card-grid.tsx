@@ -91,9 +91,14 @@ export function RoomCardGrid({
         return (
           <Card key={room.id} className="h-full gap-0 overflow-hidden">
             <CardHeader className="flex items-center justify-between gap-3 border-b bg-muted/20 pb-4">
-              <CardTitle className="text-base">
-                Phòng {room.roomNumber}
-              </CardTitle>
+              <div className="flex justify-center items-center gap-2">
+                <div className="py-2 px-2.5 bg-[#FFF7ED] border-2 border-[#FFEDD5] text-[#E05338] rounded-xl text-bold">
+                  {room.roomNumber}
+                </div>
+                <CardTitle className="text-base">
+                  Phòng {room.roomNumber}
+                </CardTitle>
+              </div>
               <Badge
                 className={
                   room.status === "EMPTY"
@@ -133,7 +138,9 @@ export function RoomCardGrid({
                 <div className="flex justify-between items-center gap-1 w-full">
                   <div>
                     {" "}
-                    <p className="text-muted-foreground text-xs">Hóa đơn gần nhất</p>
+                    <p className="text-muted-foreground text-xs">
+                      Hóa đơn gần nhất
+                    </p>
                     {latestInvoice?.totalAmount ? (
                       <div className="mt-1 flex flex-wrap items-center gap-2">
                         <span className="font-semibold">

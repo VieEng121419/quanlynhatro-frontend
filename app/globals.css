@@ -159,4 +159,8 @@
 	.text-button-input {
 		font-size: 12px
 	}
+
+	.bg-unpaid {
+		background-color: #F43F5E;
+	}
 }

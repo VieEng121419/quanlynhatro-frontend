@@ -30,7 +30,7 @@ export function getInvoiceStatusStyle(status: string) {
         label: "Đã thanh toán",
       };
     case "UNPAID":
-      return { bg: "bg-red-600", text: "text-white", label: "Chưa thanh toán" };
+      return { bg: "bg-unpaid", text: "text-white", label: "Chưa thanh toán" };
     case "PARTIAL":
       return {
         bg: "bg-amber-500",
