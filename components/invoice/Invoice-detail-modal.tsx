@@ -83,7 +83,7 @@ export function InvoiceDetailModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-sm:max-w-[90%] lg:max-w-xl max-h-[90vh] overflow-y-auto">
         <DialogHeader className="border-b pb-3">
           <div className="flex items-center justify-between">
             <div>
@@ -131,7 +131,7 @@ export function InvoiceDetailModal({
           <div className="py-2">
             <p className="text-xs font-medium mb-3">CHỈ SỐ ĐIỆN NƯỚC</p>
             <div className="flex justify-start items-end w-full">
-              <div className="grid grid-cols-2 gap-4 w-full">
+              <div className="grid max-sm:grid-cols-1 md:grid-cols-2 gap-4 w-full">
                 <div className="bg-gray-200 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
                     <Zap className="w-[10%] text-muted-foreground" />

@@ -156,7 +156,7 @@ export function EditContractModal({
 
   return (
     <Dialog open={open} onOpenChange={() => handleClose()}>
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-sm:max-w-[90%] lg:max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center text-xl gap-2">
             Chỉnh sửa hợp đồng

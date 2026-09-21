@@ -140,7 +140,7 @@ export function CreateContractModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChangeHandler}>
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-sm:max-w-[90%] lg:max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Tạo Hợp Đồng - Phòng {roomNumber}</DialogTitle>
           <DialogDescription>

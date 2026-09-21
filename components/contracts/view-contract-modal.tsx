@@ -102,7 +102,7 @@ export function ViewContractModal({
         onOpenChange(false);
       }}
     >
-      <DialogContent className="max-w-fit">
+      <DialogContent className="max-md:max-w-[90%] lg:max-w-fit">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -202,7 +202,7 @@ export function ViewContractModal({
           </div>
         </div>
 
-        <div className="flex gap-3 pt-4">
+        <div className="max-sm:flex-col flex gap-3 pt-4">
           <Button
             variant="outline"
             className="flex-1"
