@@ -122,7 +122,7 @@ export function Sidebar({ onMobileClose }: SidebarProps) {
         )}
       >
         {/* HEADER / LOGO */}
-        <div className="relative border-b px-2 py-2 min-h-[64px] flex items-center">
+        <div className="relative px-2 py-2 min-h-[64px] flex items-center">
           {/* Logo Đầy Đủ (Hiện khi Desktop mở rộng, luôn hiện trên Mobile) */}
           <Link
             href="/dashboard"
@@ -138,15 +138,20 @@ export function Sidebar({ onMobileClose }: SidebarProps) {
               height={32}
               className="w-8 h-8 rounded-lg object-contain shrink-0"
             />
-            <span className="text-xl font-bold group-hover:text-primary transition-colors whitespace-nowrap">
-              Quản Lý Trọ
-            </span>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-lg font-bold group-hover:text-primary transition-colors whitespace-nowrap">
+                Quản Lý Trọ
+              </span>
+              <span className="text-[#4B5563] text-[11px] font-medium">
+                NHÀ TRỌ TUẤN VIỆT
+              </span>
+            </div>
           </Link>
 
           {/* Logo Thu Gọn (Chỉ hiện khi Desktop thu gọn, giấu trên Mobile) */}
           <div
             className={cn(
-              "w-8 h-8 rounded-lg bg-primary items-center justify-center mx-auto",
+              "w-8 h-8 rounded-lg items-center justify-center mx-auto",
               isToggled ? "md:flex hidden" : "hidden"
             )}
           >
@@ -220,8 +225,8 @@ export function Sidebar({ onMobileClose }: SidebarProps) {
                           : "justify-start px-3 py-3",
                         // Trạng thái đang chọn
                         isActive
-                          ? "bg-[#E15D3A] text-primary-foreground shadow-md hover:bg-[#E15D3A]/90"
-                          : "text-muted-foreground hover:text-foreground"
+                          ? "bg-[#E15D3A] text-primary-foreground shadow-md hover:bg-[#E15D3A]/90 font-semibold"
+                          : "text-[#4B5563] hover:text-foreground font-semibold"
                       )}
                     >
                       <Icon
@@ -233,7 +238,7 @@ export function Sidebar({ onMobileClose }: SidebarProps) {
                       />
                       <span
                         className={cn(
-                          "whitespace-nowrap group-hover:translate-x-0.5 transition-transform duration-200",
+                          "whitespace-nowrap group-hover:translate-x-0.5 transition-transform duration-200 text-sm",
                           isToggled ? "md:hidden block" : "block"
                         )}
                       >

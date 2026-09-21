@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Mona_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "@/components/ui/sonner";
 
-const monaSans = Mona_Sans({ subsets: ["latin"] });
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-plus-jakarta-sans",
+});
 
 export const metadata: Metadata = {
   title: "Quản lý nhà trọ Tuấn Việt",
@@ -77,12 +80,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="vi" suppressHydrationWarning>
+    <html
+      lang="vi"
+      className={plusJakartaSans.variable}
+      suppressHydrationWarning
+    >
       <head>
         <meta name="theme-color" content="#E15D3A" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={monaSans.className}>
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

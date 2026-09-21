@@ -366,7 +366,7 @@ export default function RoomsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center gap-2">
         <div>
           <h1 className="max-sm:text-[20px] lg:text-3xl font-bold tracking-tight">
             Phòng Trọ
