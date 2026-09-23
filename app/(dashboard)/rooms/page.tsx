@@ -418,8 +418,8 @@ export default function RoomsPage() {
                 size="sm"
                 className={
                   viewMode === "table"
-                    ? "gap-2 rounded-lg bg-white"
-                    : "gap-2 rounded-l-button-input"
+                    ? "gap-2 rounded-lg bg-white shadow-xs!"
+                    : "gap-2 rounded-l-button-input shadow-none!"
                 }
                 onClick={() => handleViewModeChange("table")}
               >
@@ -436,8 +436,8 @@ export default function RoomsPage() {
                 size="sm"
                 className={
                   viewMode === "card"
-                    ? "gap-2 rounded-lg bg-white"
-                    : "gap-2 rounded-r-button-input"
+                    ? "gap-2 rounded-lg bg-white shadow-xs!"
+                    : "gap-2 rounded-r-button-input shadow-none!"
                 }
                 onClick={() => handleViewModeChange("card")}
               >
@@ -487,7 +487,9 @@ export default function RoomsPage() {
                   </option>
                 ))}
               </select>
-              <span className="max-sm:hidden">trong tổng {meta.totalItems} phòng</span>
+              <span className="max-sm:hidden">
+                trong tổng {meta.totalItems} phòng
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <Button

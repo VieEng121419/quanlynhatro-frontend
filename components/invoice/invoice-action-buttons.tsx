@@ -16,6 +16,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "../ui/alert-dialog";
+import { cn } from "@/lib/utils";
 
 interface Props {
   status: InvoiceStatusKey;
@@ -48,9 +49,10 @@ export function InvoiceActionButtons({
         {actions.map((a) => (
           <Button
             key={a.key}
-            className={a.role === "primary" ? "flex-1" : ""}
+            className={cn(a.role === "primary" ? "flex-1" : "", a.key === "cancel" ? "text-[#E11D48] border-[#E11D48]/40" : "")}
             variant={a.variant}
             disabled={a.isLoading}
+            size={"lg"}
             onClick={() => handleClick(a)}
           >
             {a.isLoading ? "Đang xử lý..." : a.label}

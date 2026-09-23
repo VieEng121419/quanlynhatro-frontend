@@ -225,7 +225,7 @@ export function Sidebar({ onMobileClose }: SidebarProps) {
                           : "justify-start px-3 py-3",
                         // Trạng thái đang chọn
                         isActive
-                          ? "bg-[#E15D3A] text-primary-foreground shadow-md hover:bg-[#E15D3A]/90 font-semibold"
+                          ? "bg-[#E05338] text-primary-foreground shadow-md hover:bg-[#E15D3A]/90 font-semibold"
                           : "text-[#4B5563] hover:text-foreground font-semibold"
                       )}
                     >
