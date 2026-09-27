@@ -91,7 +91,7 @@ export function InvoiceDetailModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-sm:top-0 max-sm:left-0 max-sm:h-dvh max-sm:max-h-dvh max-sm:translate-x-0 max-sm:translate-y-0 max-sm:grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90vh] overflow-hidden p-0 sm:max-w-full max-sm:rounded-none! rounded-3xl!">
+      <DialogContent className="max-sm:top-0 max-sm:left-0 max-sm:h-dvh max-sm:max-h-dvh max-sm:translate-x-0 max-sm:translate-y-0 max-sm:grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90vh] max-sm:overflow-hidden overflow-auto p-0 max-sm:max-w-full max-w-175 max-sm:rounded-none! rounded-3xl!">
         <DialogHeader className="border-b bg-[#fffaf8] p-4 sm:px-8 sticky top-0 z-10">
           <div className="flex items-start gap-4 pr-7">
             <div className="flex size-14 shrink-0 items-center justify-center rounded-[22px] bg-[#fff0ec] text-[#e34b35]">
