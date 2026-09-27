@@ -91,7 +91,7 @@ export function InvoiceDetailModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-sm:max-h-screen max-h-[90vh] overflow-y-auto p-0 sm:max-w-full max-sm:rounded-none! rounded-3xl!">
+      <DialogContent className="max-sm:top-0 max-sm:left-0 max-sm:h-dvh max-sm:max-h-dvh max-sm:translate-x-0 max-sm:translate-y-0 max-sm:grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90vh] overflow-hidden p-0 sm:max-w-full max-sm:rounded-none! rounded-3xl!">
         <DialogHeader className="border-b bg-[#fffaf8] p-4 sm:px-8 sticky top-0 z-10">
           <div className="flex items-start gap-4 pr-7">
             <div className="flex size-14 shrink-0 items-center justify-center rounded-[22px] bg-[#fff0ec] text-[#e34b35]">
@@ -124,7 +124,7 @@ export function InvoiceDetailModal({
           />
         </DialogHeader>
 
-        <div className="space-y-7 px-4 py-2 sm:px-8">
+        <div className="min-h-0 space-y-7 overflow-y-auto px-4 py-2 sm:px-8">
           <div className="grid gap-x-8 rounded-[22px] border border-[#e8eef5] bg-[#fbfcfe] px-4 pt-4 pb-2 sm:grid-cols-2 sm:px-5">
             <div className="space-y-3">
               <div className="flex justify-between border-b border-dashed border-[#dfe6ef] pb-2 text-sm sm:text-base">
