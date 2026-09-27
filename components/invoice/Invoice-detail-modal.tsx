@@ -12,7 +12,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { getInvoiceStatusLabel, getInvoiceStatusStyle } from "@/lib/utils";
-import dayjs from "dayjs";
 import { Droplets, FileText, MoveRight, X, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
@@ -20,6 +19,7 @@ import { toast } from "sonner";
 import { InvoiceActionButtons } from "./invoice-action-buttons";
 import { useCancelInvoice } from "@/hooks/useInvoiceMutations";
 import { PaymentModal } from "./payment-modal";
+import dayjs from "dayjs";
 
 interface InvoiceDetailModalProps {
   open: boolean;
@@ -91,11 +91,7 @@ export function InvoiceDetailModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-sm:max-h-[100vh] max-h-[90vh] overflow-y-auto p-0 sm:max-w-[740px] max-sm:rounded-none! rounded-3xl!">
-        <X
-          className="absolute top-4 right-4 cursor-pointer z-20 text-[#1D2940]"
-          onClick={() => onOpenChange(false)}
-        />
+      <DialogContent className="max-sm:max-h-screen max-h-[90vh] overflow-y-auto p-0 sm:max-w-162.5 max-sm:rounded-none! rounded-3xl!">
         <DialogHeader className="border-b bg-[#fffaf8] p-4 sm:px-8 sticky top-0 z-10">
           <div className="flex items-start gap-4 pr-7">
             <div className="flex size-14 shrink-0 items-center justify-center rounded-[22px] bg-[#fff0ec] text-[#e34b35]">
@@ -122,10 +118,14 @@ export function InvoiceDetailModal({
               </p>
             </div>
           </div>
+          <X
+            className="absolute top-4 right-4 cursor-pointer z-20 text-[#1D2940]"
+            onClick={() => onOpenChange(false)}
+          />
         </DialogHeader>
 
         <div className="space-y-7 px-4 py-2 sm:px-8">
-          <div className="grid gap-x-8 rounded-[22px] border border-[#e8eef5] bg-[#fbfcfe] px-4 py-4 sm:grid-cols-2 sm:px-5">
+          <div className="grid gap-x-8 rounded-[22px] border border-[#e8eef5] bg-[#fbfcfe] px-4 pt-4 pb-2 sm:grid-cols-2 sm:px-5">
             <div className="space-y-3">
               <div className="flex justify-between border-b border-dashed border-[#dfe6ef] pb-2 text-sm sm:text-base">
                 <span className="text-[#71829e] font-medium text-sm">
@@ -141,9 +141,7 @@ export function InvoiceDetailModal({
                   Ngày tạo:
                 </span>
                 <span className="font-semibold text-[#1d2940] text-sm">
-                  {invoice?.createdAt
-                    ? dayjs(invoice.createAt).format("DD/MM/YYYY HH:mm")
-                    : ""}
+                  {dayjs(invoice?.createdAt).format("HH:mm DD/MM/YYYY")}
                 </span>
               </div>
             </div>
@@ -179,13 +177,13 @@ export function InvoiceDetailModal({
                     <span className="flex size-8 items-center justify-center rounded-xl bg-[#fff3c7] text-[#D97706]">
                       <Zap className="size-4" />
                     </span>
-                    <span className="text-sm font-medium text-[#D97706] font-semibold">
+                    <span className="text-sm font-medium text-[#D97706]">
                       Điện (kWh)
                     </span>
                   </div>
                   <div className="my-3">
                     {invoice?.newElectric ? (
-                      <p className="text-2xl font-bold mt-1 flex items-center justify-start gap-4">
+                      <p className="max-sm:text-xl text-2xl font-extrabold mt-1 flex items-center justify-start max-sm:gap-1 gap-4">
                         {invoice?.oldElectric}{" "}
                         <span>
                           <MoveRight className="size-4 text-[#94A3B8]" />
@@ -193,11 +191,13 @@ export function InvoiceDetailModal({
                         {invoice?.newElectric}
                       </p>
                     ) : (
-                      <p className="text-2xl font-[900] mt-1 flex items-center justify-start gap-2">
-                        {invoice?.oldElectric}{" "}
-                        <span>
-                          <MoveRight className="size-4 text-[#94A3B8]" />
-                        </span>{" "}
+                      <p className="max-sm:text-xl text-2xl font-extrabold mt-1 flex max-sm:flex-col max-sm:items-start items-center justify-start max-sm:gap-1 gap-2">
+                        <span className="flex items-center gap-2">
+                          {invoice?.oldElectric}{" "}
+                          <span>
+                            <MoveRight className="size-4 text-[#94A3B8]" />
+                          </span>{" "}
+                        </span>
                         <Input
                           type="number"
                           value={newElectricValue ?? ""}
@@ -208,7 +208,7 @@ export function InvoiceDetailModal({
                                 : Number(e.target.value)
                             );
                           }}
-                          className="max-w-[50%]! bg-white!"
+                          className="max-sm:max-w-full! max-sm:w-full! max-w-[50%]! bg-white!"
                         />
                       </p>
                     )}
@@ -230,13 +230,13 @@ export function InvoiceDetailModal({
                     <span className="flex size-8 items-center justify-center rounded-xl bg-[#dff3ff] text-[#0284C7]">
                       <Droplets className="size-4" />
                     </span>
-                    <span className="text-sm font-medium text-[#0284C7] font-semibold">
+                    <span className="text-sm font-medium text-[#0284C7]">
                       Nước (m³)
                     </span>
                   </div>
                   <div className="my-3">
                     {invoice?.newWater ? (
-                      <p className="text-2xl font-bold mt-1 flex items-center justify-start gap-4">
+                      <p className="max-sm:text-xl text-2xl font-extrabold mt-1 flex items-center justify-start max-sm:gap-1 gap-4">
                         {invoice?.oldWater}{" "}
                         <span>
                           <MoveRight className="size-4 text-[#94A3B8]" />
@@ -244,11 +244,13 @@ export function InvoiceDetailModal({
                         {invoice?.newWater}
                       </p>
                     ) : (
-                      <p className="text-2xl font-[900] mt-1 flex items-center justify-start gap-2">
-                        {invoice?.oldWater}{" "}
-                        <span>
-                          <MoveRight className="size-4 text-[#94A3B8]" />
-                        </span>{" "}
+                      <p className="w-full max-sm:text-xl text-2xl font-extrabold mt-1 flex max-sm:flex-col max-sm:items-start items-center justify-start max-sm:gap-1 gap-2">
+                        <span className="flex items-center gap-2">
+                          {invoice?.oldWater}{" "}
+                          <span>
+                            <MoveRight className="size-4 text-[#94A3B8]" />
+                          </span>{" "}
+                        </span>
                         <Input
                           type="number"
                           value={newWatercValue ?? ""}
@@ -259,7 +261,7 @@ export function InvoiceDetailModal({
                                 : Number(e.target.value)
                             );
                           }}
-                          className="max-w-[50%]! bg-white!"
+                          className="max-sm:max-w-full! max-sm:w-full! max-w-[50%]! bg-white!"
                           min={0}
                         />
                       </p>

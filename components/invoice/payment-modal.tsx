@@ -137,8 +137,8 @@ export function PaymentModal({
             </span>
           </p>
 
-          <DialogFooter>
-            <Button type="button" variant="ghost" onClick={onClose}>
+          <DialogFooter className="flex max-sm:flex-row justify-end max-sm:gap-2">
+            <Button type="button" variant="outline" onClick={onClose}>
               Huỷ
             </Button>
             <Button type="submit" disabled={mutation.isPending}>
